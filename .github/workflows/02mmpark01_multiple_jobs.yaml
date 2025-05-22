@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 jobs:
   build:
+    name: build JAR
     runs-on: ubuntu-22.04
 
     steps:
@@ -29,6 +30,8 @@ jobs:
         run: ls -al ./build/libs
 
   deploy:
+    name: deploy
+    needs: build
     runs-on: ubuntu-22.04
     steps:
       - name: run springboot application
@@ -37,6 +40,8 @@ jobs:
           sleep 30 # stand by 30sec
 
   test:
+    name: app test
+    needs: deploy
     runs-on: ubuntu-22.04
     steps:
       - name: run automated test1 #1
